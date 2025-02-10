@@ -11,8 +11,8 @@ const app = fastify().withTypeProvider<ZodTypeProvider>()
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
-app.register(fastifyCors, { 
-  origin: env.CORS_URL 
+app.register(fastifyCors, {
+  origin: env.CORS_URL
 })
 
 app.register(fastifySwagger, {
@@ -29,8 +29,14 @@ app.register(fastifySwaggerUi, {
   routePrefix: '/docs'
 })
 
-app.register(routes)
+app.register(routes, { prefix: '/api' })
 
-app.listen({ port: env.PORT }).then(() => {
-  console.log('HTTP server running')
+app.listen({
+  host: env.FASTIFY_HOST,
+  port: env.PORT
+}).then((address: string) => {
+  console.log(`HTTP server running at ${address}`)
+}).catch((err: Error) => {
+  console.error('Error starting server:', err)
+  process.exit(1)
 })
