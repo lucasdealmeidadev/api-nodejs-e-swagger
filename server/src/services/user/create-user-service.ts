@@ -5,20 +5,25 @@ export async function createUserService({
 	name,
 	email,
 }: { name: string; email: string }) {
-	const user = await prisma.user.findFirst({
+	const userAlreadyExists  = await prisma.user.findFirst({
 		where: {
 			email,
 		},
 	});
 
-	if (user) {
+	if (userAlreadyExists ) {
    throw new AppError('E-mail já cadastrado', 409)
 	}
 
-	await prisma.user.create({
-		data: {
-			name,
-			email,
-		},
+	const user = await prisma.user.create({
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      created_at: true
+    },
+		data: { name, email },
 	});
+
+  return user
 }

@@ -6,12 +6,12 @@ export async function deleteUser(app: FastifyTypedInstance) {
   app.delete('/users/:id', {
     schema: {
       tags: ['users'],
-      description: 'Delete user',
+      description: 'Delete a user',
       params: z.object({
         id: z.coerce.number()
       }),
       response: {
-        204: z.null().describe('Delete user'),
+        204: z.null().describe('User deleted'),
         404: z.object({
           message: z.string(),
         }).describe('User not found'),

@@ -1,32 +1,32 @@
 import z from 'zod'
-import { createUserService } from '../../../services/user/create-user-service'
+import { updateUserService } from '../../../services/user/update-user-service'
 import type { FastifyTypedInstance } from '../../../types/fastify'
 
-export async function createUser(app: FastifyTypedInstance) {
-  app.post('/users', {
+export async function updateUser(app: FastifyTypedInstance) {
+  app.put('/users/', {
     schema: {
       tags: ['users'],
-      description: 'Create a new user',
+      description: 'Update a user',
       body: z.object({
-        name: z.string().trim(),
-        email: z.string().email().trim()
+        id: z.coerce.number(),
+        name: z.string(),
+        email: z.string()
       }),
       response: {
         200: z.object({
           id: z.number(),
           name: z.string(),
           email: z.string(),
-          created_at: z.date().nullable()
+          updated_at: z.date().nullable()
         }),
-        //201: z.null().describe('User created'),
         409: z.object({
           message: z.string(),
         }).describe('User conflict'),
       }
     }
   }, async (request, reply) => {
-    const { name, email } = request.body
-    const user = await createUserService({ name, email })
+    const { id, name, email } = request.body
+    const user = await updateUserService({ id, name, email })
 
     return reply.status(200).send(user)
   })
