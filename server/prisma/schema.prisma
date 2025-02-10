@@ -16,4 +16,6 @@ model User {
   name       String
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now()) @updatedAt
+
+  @@map("users")
 }

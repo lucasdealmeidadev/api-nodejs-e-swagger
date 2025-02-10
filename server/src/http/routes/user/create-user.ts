@@ -18,7 +18,6 @@ export async function createUser(app: FastifyTypedInstance) {
           email: z.string(),
           created_at: z.date().nullable()
         }),
-        //201: z.null().describe('User created'),
         409: z.object({
           message: z.string(),
         }).describe('User conflict'),
