@@ -3,12 +3,14 @@ import { updateUserService } from '../../../services/user/update-user-service'
 import type { FastifyTypedInstance } from '../../../types/fastify'
 
 export async function updateUser(app: FastifyTypedInstance) {
-  app.put('/users/', {
+  app.put('/users/:id', {
     schema: {
       tags: ['users'],
       description: 'Update a user',
+      params: z.object({
+        id: z.coerce.number()
+      }),
       body: z.object({
-        id: z.coerce.number(),
         name: z.string(),
         email: z.string()
       }),
@@ -25,7 +27,8 @@ export async function updateUser(app: FastifyTypedInstance) {
       }
     }
   }, async (request, reply) => {
-    const { id, name, email } = request.body
+    const { id } = request.params
+    const { name, email } = request.body
     const user = await updateUserService({ id, name, email })
 
     return reply.status(200).send(user)
