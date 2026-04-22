@@ -108,7 +108,7 @@ Os esquemas de validação são implementados usando **Zod** para garantir a int
 ---
 ## Licença
 
-* Licenciado sob a licença MIT - veja [LICENSE](https://github.com/lucasdealmeidadev/api-nodejs-e-swagger/blob/master/LICENSE) para mais informações.
+* Licenciado sob a licença MIT - veja [LICENSE](https://github.com/lucasdealmeidadev/api-nodejs-e-swagger/blob/main/LICENCE) para mais informações.
 
 ---
 
