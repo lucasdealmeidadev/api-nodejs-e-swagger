@@ -26,7 +26,7 @@ app.register(fastifySwagger, {
 })
 
 app.register(fastifySwaggerUi, {
-  routePrefix: '/docs'
+  routePrefix: '/swagger'
 })
 
 app.register(routes, { prefix: '/api' })
